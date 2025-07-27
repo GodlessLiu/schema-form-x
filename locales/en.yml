@@ -1,4 +1,5 @@
 app:
+  title: Form Designer
   settings:
     title: App Settings
     description: Configure the global configuration of the website

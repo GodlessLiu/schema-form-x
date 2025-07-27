@@ -1,4 +1,5 @@
 app:
+  title: 表单设计器
   settings:
     title: 网站设置
     description: 配置网站的全局配置
