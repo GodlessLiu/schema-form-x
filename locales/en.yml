@@ -1,0 +1,21 @@
+app:
+  settings:
+    title: App Settings
+    description: Configure the global configuration of the website
+    performance:
+      title: Theme Customizer
+      color:
+        title: Color
+        blue: Blue
+        green: Green
+        orange: Orange
+        rose: Rose
+        violet: Violet
+        yellow: Yellow
+        zinc: Zinc
+      radius: Radius
+      theme:
+        title: Theme
+        light: Light
+        dark: Dark
+      language: Language
