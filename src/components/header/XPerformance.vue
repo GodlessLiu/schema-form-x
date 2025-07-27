@@ -25,7 +25,7 @@ const { theme, toggleTheme, toggleDark, language, toggleLanguage } = useSettings
             :class="{ 'border-[var(--color-foreground)]': themeColor === theme.color }"
             @click="toggleTheme(themeColor)"
           >
-            <span :style="{ backgroundColor: themeColor }" class="inline-block w-4 h-4 mx-4 rounded-full" />
+            <span :style="{ backgroundColor: `var(--color-${themeColor})` }" class="inline-block w-4 h-4 mx-4 rounded-full" />
             {{ t(`app.settings.performance.color.${themeColor}`) }}
           </button>
         </div>
@@ -43,7 +43,8 @@ const { theme, toggleTheme, toggleDark, language, toggleLanguage } = useSettings
             :class="{ 'border-[var(--color-foreground)]': th === theme.mode }"
             @click="toggleDark(th)"
           >
-            <span :class="`icon-[solar--${th === 'dark' ? 'moon' : 'sun'}-line-duotone]`" class="mr-2 ml-1" />
+            <span v-show="th === 'dark'" class="icon-[solar--moon-line-duotone] mr-2 ml-1" />
+            <span v-show="th === 'light'" class="icon-[solar--sun-line-duotone] mr-2 ml-1" />
             {{ t(`app.settings.performance.theme.${th}`) }}
           </button>
         </div>
