@@ -1,7 +1,9 @@
 <!-- 网页表现相关设置 -->
 <script setup lang="ts">
 import { useSettings } from '~/composables/useSettings'
-import { LANGUAGES, THEME_COLORS, THEMES } from '~/constants/App'
+import { THEMES } from '~/constants/App'
+import { availableLocales } from '~/modules/i18n'
+import { availableThemes } from '~/modules/theme'
 
 const { t } = useI18n()
 const { theme, toggleTheme, toggleDark, language, toggleLanguage } = useSettings()
@@ -17,14 +19,14 @@ const { theme, toggleTheme, toggleDark, language, toggleLanguage } = useSettings
       <div>
         <div class="grid grid-cols-3 gap-2">
           <button
-            v-for="themeColor in THEME_COLORS"
-            :key="themeColor.name"
+            v-for="themeColor in availableThemes"
+            :key="themeColor"
             class="py-1 rounded-sm border-1 flex items-center cursor-pointer text-sm"
-            :class="{ 'border-[var(--color-foreground)]': themeColor.name === theme.color }"
-            @click="toggleTheme(themeColor.name)"
+            :class="{ 'border-[var(--color-foreground)]': themeColor === theme.color }"
+            @click="toggleTheme(themeColor)"
           >
-            <span :style="{ backgroundColor: themeColor.color }" class="inline-block w-4 h-4 mx-4 rounded-full" />
-            {{ t(`app.settings.performance.color.${themeColor.name}`) }}
+            <span :style="{ backgroundColor: themeColor }" class="inline-block w-4 h-4 mx-4 rounded-full" />
+            {{ t(`app.settings.performance.color.${themeColor}`) }}
           </button>
         </div>
       </div>
@@ -50,17 +52,17 @@ const { theme, toggleTheme, toggleDark, language, toggleLanguage } = useSettings
     <div>
       <!-- 网站语言 -->
       <h5 class="text-sm font-medium leading-none py-2">
-        {{ t('app.settings.performance.language') }}
+        {{ t('app.settings.performance.language.title') }}
       </h5>
       <div class="grid grid-cols-4 gap-2">
         <button
-          v-for="lg in LANGUAGES"
-          :key="lg.id"
+          v-for="lg in availableLocales"
+          :key="lg"
           class="py-1 rounded-sm border-1 cursor-pointer text-sm text-center"
-          :class="{ 'border-[var(--color-foreground)]': lg.id === language }"
-          @click="toggleLanguage(lg.id)"
+          :class="{ 'border-[var(--color-foreground)]': lg === language }"
+          @click="toggleLanguage(lg)"
         >
-          {{ lg.name }}
+          {{ t(`app.settings.performance.language.${lg}`) }}
         </button>
       </div>
     </div>

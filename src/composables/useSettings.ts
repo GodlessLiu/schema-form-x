@@ -1,5 +1,6 @@
-import type { Theme, ThemeName } from '~/constants/App'
+import type { Theme } from '~/constants/App'
 import { loadLanguageAsync } from '~/modules/i18n'
+import { loadThemeAsync } from '~/modules/theme'
 
 export function useSettings() {
   const theme = useLocalStorage('theme', {
@@ -8,7 +9,8 @@ export function useSettings() {
   })
   const language = useLocalStorage('language', 'zh-CN')
   // 修改主题色
-  function toggleTheme(name: ThemeName) {
+  async function toggleTheme(name: string) {
+    await loadThemeAsync(name)
     document.documentElement.classList.replace(`theme-${theme.value.color}`, `theme-${name}`)
     theme.value.color = name
   }
@@ -23,6 +25,8 @@ export function useSettings() {
   function initSettings() {
     // 初始化主题色
     document.documentElement.classList.add(`theme-${theme.value.color}`)
+    // 加载css资源
+    loadThemeAsync(theme.value.color)
     // 初始化主题模式
     document.documentElement.classList.toggle('dark', theme.value.mode === 'dark')
     // 初始化语言

@@ -13,9 +13,13 @@ app:
         violet: Violet
         yellow: Yellow
         zinc: Zinc
+        red: Red
       radius: Radius
       theme:
         title: Theme
         light: Light
         dark: Dark
-      language: Language
+      language:
+        title: Language
+        en: English
+        zh-CN: Chinese
