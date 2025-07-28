@@ -11,6 +11,7 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: './',
   plugins: [
     vue(),
     tailwindcss(),
@@ -41,6 +42,15 @@ export default defineConfig({
   resolve: {
     alias: {
       '~': fileURLToPath(new URL('./src', import.meta.url)),
+    },
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        chunkFileNames: 'js/[hash].js',
+        entryFileNames: 'js/[hash].js',
+        assetFileNames: '[ext]/[hash].[ext]',
+      },
     },
   },
 })
