@@ -3,41 +3,44 @@ import { loadLanguageAsync } from '~/modules/i18n'
 import { loadThemeAsync } from '~/modules/theme'
 
 export function useSettings() {
-  const theme = useLocalStorage('theme', {
-    color: 'zinc',
-    mode: 'dark',
+  const settings = useLocalStorage('settings', {
+    theme: {
+      color: 'zinc',
+      mode: 'dark',
+    },
+    language: 'zh-CN',
+
   })
-  const language = useLocalStorage('language', 'zh-CN')
   // 修改主题色
   async function toggleTheme(name: string) {
     await loadThemeAsync(name)
-    document.documentElement.classList.replace(`theme-${theme.value.color}`, `theme-${name}`)
-    theme.value.color = name
+    document.documentElement.classList.replace(`theme-${settings.value.theme.color}`, `theme-${name}`)
+    settings.value.theme.color = name
   }
 
   // 修改主题模式
   function toggleDark(mode: Theme) {
-    theme.value.mode = mode
+    settings.value.theme.mode = mode
     document.documentElement.classList.toggle('dark', mode === 'dark')
   }
 
   // 初始化主题
   function initSettings() {
     // 初始化主题色
-    document.documentElement.classList.add(`theme-${theme.value.color}`)
+    document.documentElement.classList.add(`theme-${settings.value.theme.color}`)
     // 加载css资源
-    loadThemeAsync(theme.value.color)
+    loadThemeAsync(settings.value.theme.color)
     // 初始化主题模式
-    document.documentElement.classList.toggle('dark', theme.value.mode === 'dark')
+    document.documentElement.classList.toggle('dark', settings.value.theme.mode === 'dark')
     // 初始化语言
-    loadLanguageAsync(language.value)
+    loadLanguageAsync(settings.value.language)
   }
 
   // 设置语言
   function toggleLanguage(lang: string) {
-    language.value = lang
+    settings.value.language = lang
     loadLanguageAsync(lang)
   }
 
-  return { theme, toggleTheme, initTheme: initSettings, toggleDark, language, toggleLanguage }
+  return { settings, toggleTheme, initTheme: initSettings, toggleDark, toggleLanguage }
 }
