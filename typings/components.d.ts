@@ -21,6 +21,7 @@ declare module 'vue' {
     SheetOverlay: typeof import('./../src/components/ui/sheet/SheetOverlay.vue')['default']
     SheetTitle: typeof import('./../src/components/ui/sheet/SheetTitle.vue')['default']
     SheetTrigger: typeof import('./../src/components/ui/sheet/SheetTrigger.vue')['default']
+    Sonner: typeof import('./../src/components/ui/sonner/Sonner.vue')['default']
     Toggle: typeof import('./../src/components/ui/toggle/Toggle.vue')['default']
     XFooter: typeof import('./../src/components/XFooter.vue')['default']
     XHeader: typeof import('./../src/components/header/XHeader.vue')['default']

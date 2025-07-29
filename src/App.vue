@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useSettings } from '~/composables/useSettings'
+import 'vue-sonner/style.css'
 
 const { initTheme } = useSettings()
 
@@ -9,5 +10,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <router-view />
+  <div>
+    <Sonner />
+    <router-view />
+  </div>
 </template>
