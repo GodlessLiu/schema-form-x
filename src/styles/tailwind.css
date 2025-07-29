@@ -17,6 +17,12 @@
   --color-yellow: hsl(47.9 95.8% 53.1%);
 }
 
+@font-face {
+  font-family: jiangxi;
+  src: url("/jiangxihaojiu.ttf");
+}
+
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -58,7 +64,7 @@
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border outline-ring/50 font-[jiangxi];
   }
 
   body {
