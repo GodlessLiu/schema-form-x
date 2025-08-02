@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 
 import App from './App.vue'
 
-import { autoRefresh } from './utils/auto-update'
+import { autoRefresh } from './lib/auto-update'
 import '~/styles/tailwind.css'
 
 function init() {

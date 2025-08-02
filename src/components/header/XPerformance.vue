@@ -1,7 +1,7 @@
 <!-- 网页表现相关设置 -->
 <script setup lang="ts">
 import { useSettings } from '~/composables/useSettings'
-import { THEMES } from '~/constants/App'
+import { THEME_MODES } from '~/constants/App'
 import { availableLocales } from '~/modules/i18n'
 import { availableThemes } from '~/modules/theme'
 
@@ -37,15 +37,15 @@ const { settings, toggleTheme, toggleDark, toggleLanguage } = useSettings()
       <div>
         <div class="grid grid-cols-4 gap-2">
           <button
-            v-for="th in THEMES"
-            :key="th"
+            v-for="mode in THEME_MODES"
+            :key="mode"
             class="py-1 rounded-sm border-1 flex items-center cursor-pointer text-sm"
-            :class="{ 'border-[var(--color-foreground)]': th === settings.theme.mode }"
-            @click="toggleDark(th)"
+            :class="{ 'border-[var(--color-foreground)]': mode === settings.theme.mode }"
+            @click="toggleDark(mode)"
           >
-            <span v-show="th === 'dark'" class="icon-[solar--moon-line-duotone] mr-2 ml-1" />
-            <span v-show="th === 'light'" class="icon-[solar--sun-line-duotone] mr-2 ml-1" />
-            {{ t(`app.settings.performance.theme.${th}`) }}
+            <span v-show="mode === 'dark'" class="icon-[solar--moon-line-duotone] mr-2 ml-1" />
+            <span v-show="mode === 'light'" class="icon-[solar--sun-line-duotone] mr-2 ml-1" />
+            {{ t(`app.settings.performance.theme.${mode}`) }}
           </button>
         </div>
       </div>

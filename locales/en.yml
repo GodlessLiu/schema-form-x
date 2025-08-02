@@ -24,3 +24,4 @@ app:
         title: Language
         en: English
         zh-CN: Chinese
+      empty: No results found.
