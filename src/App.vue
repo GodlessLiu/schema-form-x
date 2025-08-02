@@ -11,7 +11,6 @@ onMounted(() => {
 
 <template>
   <div>
-    <Sonner />
     <router-view />
   </div>
 </template>

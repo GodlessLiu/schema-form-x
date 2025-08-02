@@ -4,8 +4,7 @@
 
 <template>
   <div>
-    <h1>Home <XCommand /></h1>
-    <Button>hello</Button>
+    hello world
   </div>
 </template>
 

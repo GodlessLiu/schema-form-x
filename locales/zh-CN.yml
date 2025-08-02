@@ -1,5 +1,6 @@
 app:
-  title: 表单设计器
+  title: 应用名
+  description: 应用描述
   settings:
     title: 网站设置
     description: 配置网站的全局配置

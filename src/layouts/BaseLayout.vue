@@ -4,6 +4,10 @@
       <x-header />
     </div>
     <main class="flex-1 mt-4">
+      <!-- golbal notification -->
+      <Sonner />
+      <!-- global command -->
+      <x-command />
       <router-view />
     </main>
     <div class="h-[40px]">
