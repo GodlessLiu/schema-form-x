@@ -53,6 +53,7 @@ export function useGlobalLoading() {
     }
     catch (error) {
       toast.error(t('app.global.loadSourceError'), {
+        closeButton: true,
         style: {
           background: '#ff0000',
           color: '#fff',
