@@ -3,17 +3,6 @@ import { loadLanguageAsync } from '~/modules/i18n'
 import { loadThemeAsync } from '~/modules/theme'
 import { useGlobalLoading } from './useGlobalLoading'
 
-// Types
-interface ThemeSettings {
-  color: string
-  mode: Theme
-}
-
-interface Settings {
-  theme: ThemeSettings
-  language: string
-}
-
 const DEFAULT_SETTINGS: Settings = {
   theme: {
     color: 'zinc',

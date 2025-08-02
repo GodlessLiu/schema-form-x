@@ -4,20 +4,6 @@ import { THEME_MODES } from '~/constants/App'
 import { availableLocales } from '~/modules/i18n'
 import { availableThemes } from '~/modules/theme'
 
-// Types
-interface CommandItem {
-  value: string
-  label: string
-  icon?: string
-  action: () => Promise<void> | void
-  disabled?: boolean
-}
-
-interface CommandGroup {
-  title: string
-  items: CommandItem[]
-}
-
 // Control dialog open/close state
 const open = ref(false)
 

@@ -1,18 +1,6 @@
 import { computed, readonly, ref } from 'vue'
 import { toast } from 'vue-sonner'
 
-// Types
-interface LoadingOptions {
-  text?: string
-  silent?: boolean // Don't show error toast
-}
-
-interface LoadingState {
-  isLoading: boolean
-  loadingText: string
-  loadingCount: number
-}
-
 // Global loading state
 const state = ref<LoadingState>({
   isLoading: false,
