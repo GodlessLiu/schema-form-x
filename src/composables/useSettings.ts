@@ -1,6 +1,7 @@
 import type { Theme } from '~/constants/App'
 import { loadLanguageAsync } from '~/modules/i18n'
 import { loadThemeAsync } from '~/modules/theme'
+import { useGlobalLoading } from './useGlobalLoading'
 
 export function useSettings() {
   const settings = useLocalStorage('settings', {
@@ -9,13 +10,17 @@ export function useSettings() {
       mode: 'dark',
     },
     language: 'zh-CN',
-
   })
+
+  const { startLoading, stopLoading } = useGlobalLoading()
+
   // 修改主题色
   async function toggleTheme(name: string) {
+    startLoading()
     await loadThemeAsync(name)
     document.documentElement.classList.replace(`theme-${settings.value.theme.color}`, `theme-${name}`)
     settings.value.theme.color = name
+    stopLoading()
   }
 
   // 修改主题模式
@@ -37,9 +42,11 @@ export function useSettings() {
   }
 
   // 设置语言
-  function toggleLanguage(lang: string) {
+  async function toggleLanguage(lang: string) {
+    startLoading()
     settings.value.language = lang
-    loadLanguageAsync(lang)
+    await loadLanguageAsync(lang)
+    stopLoading()
   }
 
   return { settings, toggleTheme, initTheme: initSettings, toggleDark, toggleLanguage }

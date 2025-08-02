@@ -8,6 +8,8 @@
       <Sonner />
       <!-- global command -->
       <x-command />
+      <!-- global loading -->
+      <GlobalLoading />
       <router-view />
     </main>
     <div class="h-[40px]">

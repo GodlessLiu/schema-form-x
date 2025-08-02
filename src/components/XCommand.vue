@@ -32,8 +32,8 @@ function handleOpenChange() {
 }
 
 // Handle theme selection and close dialog
-function handleThemeSelect(theme: string) {
-  toggleTheme(theme)
+async function handleThemeSelect(theme: string) {
+  await toggleTheme(theme)
   open.value = false
 }
 
@@ -44,8 +44,8 @@ function handleThemeModeSelect(mode: 'light' | 'dark') {
 }
 
 // Handle language selection and close dialog
-function handleLanguageSelect(language: string) {
-  toggleLanguage(language)
+async function handleLanguageSelect(language: string) {
+  await toggleLanguage(language)
   open.value = false
 }
 </script>

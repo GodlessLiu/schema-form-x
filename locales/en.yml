@@ -1,6 +1,8 @@
 app:
   title: App name
   description: App description
+  global:
+    loadingText: Loading...
   settings:
     title: App Settings
     description: Configure the global configuration of the website
