@@ -4,6 +4,20 @@ import { THEME_MODES } from '~/constants/App'
 import { availableLocales } from '~/modules/i18n'
 import { availableThemes } from '~/modules/theme'
 
+// Types
+interface CommandItem {
+  value: string
+  label: string
+  icon?: string
+  action: () => Promise<void> | void
+  disabled?: boolean
+}
+
+interface CommandGroup {
+  title: string
+  items: CommandItem[]
+}
+
 // Control dialog open/close state
 const open = ref(false)
 
@@ -11,19 +25,21 @@ const open = ref(false)
 const { t } = useI18n()
 const { toggleTheme, toggleDark, toggleLanguage, settings } = useSettings()
 
-// Listen for Cmd+J (Mac) or Ctrl+J (Windows/Linux) keyboard shortcuts
+// Keyboard shortcuts configuration
 const { Meta_J, Ctrl_J } = useMagicKeys({
   passive: false,
   onEventFired(e) {
-    if (e.key === 'j' && (e.metaKey || e.ctrlKey))
+    if (e.key === 'j' && (e.metaKey || e.ctrlKey)) {
       e.preventDefault()
+    }
   },
 })
 
-// Toggle dialog when keyboard shortcut is pressed
-watch([Meta_J, Ctrl_J], (v) => {
-  if (v[0] || v[1])
+// Watch for keyboard shortcuts
+watch([Meta_J, Ctrl_J], ([metaJ, ctrlJ]) => {
+  if (metaJ || ctrlJ) {
     handleOpenChange()
+  }
 })
 
 // Toggle dialog open/close state
@@ -31,66 +47,153 @@ function handleOpenChange() {
   open.value = !open.value
 }
 
+// Helper function to create command items
+function createCommandItem(
+  value: string,
+  label: string,
+  action: () => Promise<void> | void,
+  isSelected: boolean,
+  icon?: string,
+): CommandItem {
+  return {
+    value,
+    label,
+    icon: isSelected ? (icon || 'icon-[dashicons--yes]') : undefined,
+    action,
+    disabled: isSelected,
+  }
+}
+
+// Helper function to create command groups
+function createCommandGroup(
+  title: string,
+  items: Array<{
+    value: string
+    label: string
+    action: () => Promise<void> | void
+    isSelected: boolean
+  }>,
+): CommandGroup {
+  return {
+    title,
+    items: items.map(item => createCommandItem(item.value, item.label, item.action, item.isSelected)),
+  }
+}
+
+// Command groups configuration
+const commandGroups = computed<CommandGroup[]>(() => [
+  // Theme colors group
+  createCommandGroup(
+    t('app.settings.performance.color.title'),
+    availableThemes.map(theme => ({
+      value: `theme-${theme}`,
+      label: t(`app.settings.performance.color.${theme}`),
+      action: () => handleThemeSelect(theme),
+      isSelected: theme === settings.value.theme.color,
+    })),
+  ),
+
+  // Theme modes group
+  createCommandGroup(
+    t('app.settings.performance.theme.title'),
+    THEME_MODES.map(mode => ({
+      value: `mode-${mode}`,
+      label: t(`app.settings.performance.theme.${mode}`),
+      action: () => handleThemeModeSelect(mode),
+      isSelected: mode === settings.value.theme.mode,
+    })),
+  ),
+
+  // Languages group
+  createCommandGroup(
+    t('app.settings.performance.language.title'),
+    availableLocales.map(lang => ({
+      value: `lang-${lang}`,
+      label: t(`app.settings.performance.language.${lang}`),
+      action: () => handleLanguageSelect(lang),
+      isSelected: lang === settings.value.language,
+    })),
+  ),
+])
+
+// Flatten all command items for search functionality
+const commandItems = computed<CommandItem[]>(() =>
+  commandGroups.value.flatMap(group => group.items),
+)
+
 // Handle theme selection and close dialog
 async function handleThemeSelect(theme: string) {
-  await toggleTheme(theme)
-  open.value = false
+  try {
+    await toggleTheme(theme)
+    open.value = false
+  }
+  catch (error) {
+    console.error('Failed to change theme:', error)
+  }
 }
 
 // Handle theme mode selection and close dialog
 function handleThemeModeSelect(mode: 'light' | 'dark') {
-  toggleDark(mode)
-  open.value = false
+  try {
+    toggleDark(mode)
+    open.value = false
+  }
+  catch (error) {
+    console.error('Failed to change theme mode:', error)
+  }
 }
 
 // Handle language selection and close dialog
 async function handleLanguageSelect(language: string) {
-  await toggleLanguage(language)
-  open.value = false
+  try {
+    await toggleLanguage(language)
+    open.value = false
+  }
+  catch (error) {
+    console.error('Failed to change language:', error)
+  }
+}
+
+// Handle command item selection
+async function handleCommandSelect(value: string) {
+  const item = commandItems.value.find(item => item.value === value)
+  if (item && !item.disabled) {
+    await item.action()
+  }
 }
 </script>
 
 <template>
   <div>
     <CommandDialog v-model:open="open">
-      <CommandInput placeholder="Type a command or search..." />
+      <CommandInput :placeholder="t('app.settings.performance.search')" />
       <CommandList>
         <CommandEmpty>{{ t('app.settings.performance.empty') }}</CommandEmpty>
-        <CommandGroup :heading="t('app.settings.performance.color.title')">
-          <CommandItem
-            v-for="theme in availableThemes"
-            :key="theme"
-            :value="theme"
-            @select="handleThemeSelect(theme)"
-          >
-            <span :style="{ color: `var(--color-${theme})` }">
-              <span v-if="theme === settings.theme.color" class="icon-[dashicons--yes]" />
-              {{ t(`app.settings.performance.color.${theme}`) }}
-            </span>
-          </CommandItem>
-        </CommandGroup>
-        <CommandGroup :heading="t('app.settings.performance.theme.title')">
-          <CommandItem
-            v-for="mode in THEME_MODES"
-            :key="mode"
-            :value="mode"
-            @select="handleThemeModeSelect(mode)"
-          >
-            <span v-if="mode === settings.theme.mode" class="icon-[dashicons--yes]" />
-            {{ t(`app.settings.performance.theme.${mode}`) }}
-          </CommandItem>
-        </CommandGroup>
-        <CommandGroup :heading="t('app.settings.performance.language.title')">
-          <CommandItem
-            v-for="lg in availableLocales"
-            :key="lg"
-            :value="lg"
-            @select="handleLanguageSelect(lg)"
-          >
-            <span v-if="lg === settings.language" class="icon-[dashicons--yes]" />
-            {{ t(`app.settings.performance.language.${lg}`) }}
-          </CommandItem>
-        </CommandGroup>
+
+        <!-- Command Groups -->
+        <template v-for="group in commandGroups" :key="group.title">
+          <CommandGroup :heading="group.title">
+            <CommandItem
+              v-for="item in group.items"
+              :key="item.value"
+              :value="item.value"
+              :disabled="item.disabled"
+              @select="handleCommandSelect(item.value)"
+            >
+              <span
+                v-if="item.value.startsWith('theme-')"
+                :style="{ color: `var(--color-${item.value.replace('theme-', '')})` }"
+              >
+                <span v-if="item.icon" :class="item.icon" />
+                {{ item.label }}
+              </span>
+              <span v-else>
+                <span v-if="item.icon" :class="item.icon" />
+                {{ item.label }}
+              </span>
+            </CommandItem>
+          </CommandGroup>
+        </template>
       </CommandList>
     </CommandDialog>
   </div>

@@ -3,22 +3,37 @@ import { loadLanguageAsync } from '~/modules/i18n'
 import { loadThemeAsync } from '~/modules/theme'
 import { useGlobalLoading } from './useGlobalLoading'
 
-export function useSettings() {
-  const settings = useLocalStorage('settings', {
-    theme: {
-      color: 'zinc',
-      mode: 'dark',
-    },
-    language: 'zh-CN',
-  })
+// Types
+interface ThemeSettings {
+  color: string
+  mode: Theme
+}
 
+interface Settings {
+  theme: ThemeSettings
+  language: string
+}
+
+const DEFAULT_SETTINGS: Settings = {
+  theme: {
+    color: 'zinc',
+    mode: 'dark',
+  },
+  language: 'zh-CN',
+}
+
+export function useSettings() {
+  const settings = useLocalStorage<Settings>('settings', DEFAULT_SETTINGS)
   const { withLoading } = useGlobalLoading()
 
   // Change theme color
   async function toggleTheme(name: string) {
-    withLoading(async () => {
+    await withLoading(async () => {
       await loadThemeAsync(name)
-      document.documentElement.classList.replace(`theme-${settings.value.theme.color}`, `theme-${name}`)
+      document.documentElement.classList.replace(
+        `theme-${settings.value.theme.color}`,
+        `theme-${name}`,
+      )
       settings.value.theme.color = name
     })
   }
@@ -30,24 +45,47 @@ export function useSettings() {
   }
 
   // Initialize theme
-  function initSettings() {
-    // Initialize theme color
-    document.documentElement.classList.add(`theme-${settings.value.theme.color}`)
-    // Load CSS resources
-    loadThemeAsync(settings.value.theme.color)
-    // Initialize theme mode
-    document.documentElement.classList.toggle('dark', settings.value.theme.mode === 'dark')
-    // Initialize language
-    loadLanguageAsync(settings.value.language)
+  async function initSettings() {
+    try {
+      // Initialize theme color
+      document.documentElement.classList.add(`theme-${settings.value.theme.color}`)
+
+      // Load CSS resources
+      await loadThemeAsync(settings.value.theme.color)
+
+      // Initialize theme mode
+      document.documentElement.classList.toggle('dark', settings.value.theme.mode === 'dark')
+
+      // Initialize language
+      await loadLanguageAsync(settings.value.language)
+    }
+    catch (error) {
+      console.error('Failed to initialize settings:', error)
+      // Fallback to default settings
+      settings.value = { ...DEFAULT_SETTINGS }
+    }
   }
 
   // Set language
   async function toggleLanguage(lang: string) {
-    withLoading(async () => {
+    await withLoading(async () => {
       await loadLanguageAsync(lang)
       settings.value.language = lang
     })
   }
 
-  return { settings, toggleTheme, initTheme: initSettings, toggleDark, toggleLanguage }
+  // Reset to default settings
+  function resetSettings() {
+    settings.value = { ...DEFAULT_SETTINGS }
+    initSettings()
+  }
+
+  return {
+    settings,
+    toggleTheme,
+    initTheme: initSettings,
+    toggleDark,
+    toggleLanguage,
+    resetSettings,
+  }
 }

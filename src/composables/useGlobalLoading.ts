@@ -1,65 +1,92 @@
 import { computed, readonly, ref } from 'vue'
 import { toast } from 'vue-sonner'
 
+// Types
+interface LoadingOptions {
+  text?: string
+  silent?: boolean // Don't show error toast
+}
+
+interface LoadingState {
+  isLoading: boolean
+  loadingText: string
+  loadingCount: number
+}
+
 // Global loading state
-const isLoading = ref(false)
-const loadingText = ref('')
-const loadingCount = ref(0)
+const state = ref<LoadingState>({
+  isLoading: false,
+  loadingText: '',
+  loadingCount: 0,
+})
 
 export function useGlobalLoading() {
-  // Computed property to check if any loading is active
-  const isAnyLoading = computed(() => loadingCount.value > 0)
-
   const { t } = useI18n()
 
+  // Computed properties
+  const isAnyLoading = computed(() => state.value.loadingCount > 0)
+  const isLoading = computed(() => state.value.isLoading)
+  const loadingText = computed(() => state.value.loadingText)
+  const loadingCount = computed(() => state.value.loadingCount)
+
   // Start loading with optional text
-  function startLoading(text?: string) {
-    loadingCount.value++
-    isLoading.value = true
-    if (text) {
-      loadingText.value = text
+  function startLoading(options?: LoadingOptions | string) {
+    const opts = typeof options === 'string' ? { text: options } : options || {}
+
+    state.value.loadingCount++
+    state.value.isLoading = true
+
+    if (opts.text) {
+      state.value.loadingText = opts.text
     }
   }
 
   // Stop loading
   function stopLoading() {
-    loadingCount.value = Math.max(0, loadingCount.value - 1)
-    if (loadingCount.value === 0) {
-      isLoading.value = false
-      loadingText.value = ''
+    state.value.loadingCount = Math.max(0, state.value.loadingCount - 1)
+
+    if (state.value.loadingCount === 0) {
+      state.value.isLoading = false
+      state.value.loadingText = ''
     }
   }
 
   // Set loading text without changing loading state
   function setLoadingText(text: string) {
-    loadingText.value = text
+    state.value.loadingText = text
   }
 
   // Reset loading state completely
   function resetLoading() {
-    loadingCount.value = 0
-    isLoading.value = false
-    loadingText.value = ''
+    state.value = {
+      isLoading: false,
+      loadingText: '',
+      loadingCount: 0,
+    }
   }
 
   // Async wrapper for automatic loading management
   async function withLoading<T>(
     asyncFn: () => Promise<T>,
-    text?: string,
+    options?: LoadingOptions | string,
   ): Promise<T> {
+    const opts = typeof options === 'string' ? { text: options } : options || {}
+
     try {
-      startLoading(text)
+      startLoading(opts)
       return await asyncFn()
     }
     catch (error) {
-      toast.error(t('app.global.loadSourceError'), {
-        closeButton: true,
-        style: {
-          background: '#ff0000',
-          color: '#fff',
-        },
-      })
-      return new Promise<T>((_, reject) => reject(error))
+      if (!opts.silent) {
+        toast.error(t('app.global.loadSourceError'), {
+          closeButton: true,
+          style: {
+            background: '#ff0000',
+            color: '#fff',
+          },
+        })
+      }
+      throw error // Re-throw the error instead of creating a new rejected promise
     }
     finally {
       stopLoading()
@@ -67,7 +94,7 @@ export function useGlobalLoading() {
   }
 
   return {
-    // Reactive state
+    // Reactive state (readonly)
     isLoading: readonly(isLoading),
     loadingText: readonly(loadingText),
     loadingCount: readonly(loadingCount),

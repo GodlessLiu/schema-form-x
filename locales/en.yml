@@ -9,6 +9,7 @@ app:
     description: Configure the global configuration of the website
     performance:
       title: Theme Customizer
+      search: Search
       color:
         title: Color
         blue: Blue

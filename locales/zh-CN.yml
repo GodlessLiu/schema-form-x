@@ -9,6 +9,7 @@ app:
     description: 配置网站的全局配置
     performance:
       title: 自定义主题
+      search: 搜索
       color:
         title: 颜色
         blue: 蓝色
