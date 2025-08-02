@@ -26,7 +26,7 @@ build:
 run:
 	@echo "Starting Docker container..."
 	docker run -d --name $(IMAGE_NAME)-container \
-		-p 3000:80 \
+		-p 3000:8080 \
 		$(FULL_IMAGE_NAME)
 	@echo "Container started on http://localhost:3000"
 

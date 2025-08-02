@@ -10,6 +10,10 @@ RUN pnpm run build
 
 FROM nginx:alpine
 LABEL MAINTAINER="2788370451@qq.com"
-COPY --from=base  /app/deploy/nginx/app.conf /etc/nginx/conf.d/app.conf
+COPY --from=base  /app/deploy/nginx/app.conf /etc/nginx/conf.d/default.conf
+COPY --from=base  /app/deploy/nginx/nginx.conf /etc/nginx/nginx.conf
 COPY --from=build  /app/dist /usr/share/nginx/html
 RUN ls -al /usr/share/nginx/html
+
+EXPOSE 8080
+CMD ["nginx", "-g", "daemon off;"]
