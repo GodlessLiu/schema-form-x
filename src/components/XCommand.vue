@@ -9,7 +9,7 @@ const open = ref(false)
 
 // Initialize i18n and settings composables
 const { t } = useI18n()
-const { toggleTheme, toggleDark, toggleLanguage } = useSettings()
+const { toggleTheme, toggleDark, toggleLanguage, settings } = useSettings()
 
 // Listen for Cmd+J (Mac) or Ctrl+J (Windows/Linux) keyboard shortcuts
 const { Meta_J, Ctrl_J } = useMagicKeys({
@@ -63,8 +63,10 @@ function handleLanguageSelect(language: string) {
             :value="theme"
             @select="handleThemeSelect(theme)"
           >
-            <span :style="{ backgroundColor: `var(--color-${theme})` }" class="inline-block w-4 h-4 mx-4 rounded-full" />
-            {{ t(`app.settings.performance.color.${theme}`) }}
+            <span :style="{ color: `var(--color-${theme})` }">
+              <span v-if="theme === settings.theme.color" class="icon-[dashicons--yes]" />
+              {{ t(`app.settings.performance.color.${theme}`) }}
+            </span>
           </CommandItem>
         </CommandGroup>
         <CommandGroup :heading="t('app.settings.performance.theme.title')">
@@ -72,9 +74,9 @@ function handleLanguageSelect(language: string) {
             v-for="mode in THEME_MODES"
             :key="mode"
             :value="mode"
-            class=" indent-4"
             @select="handleThemeModeSelect(mode)"
           >
+            <span v-if="mode === settings.theme.mode" class="icon-[dashicons--yes]" />
             {{ t(`app.settings.performance.theme.${mode}`) }}
           </CommandItem>
         </CommandGroup>
@@ -83,9 +85,9 @@ function handleLanguageSelect(language: string) {
             v-for="lg in availableLocales"
             :key="lg"
             :value="lg"
-            class="indent-4"
             @select="handleLanguageSelect(lg)"
           >
+            <span v-if="lg === settings.language" class="icon-[dashicons--yes]" />
             {{ t(`app.settings.performance.language.${lg}`) }}
           </CommandItem>
         </CommandGroup>

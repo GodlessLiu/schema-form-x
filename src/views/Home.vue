@@ -1,10 +1,10 @@
 <script setup lang="ts">
-
+useTitle('Home')
 </script>
 
 <template>
   <div>
-    hello world
+    <Button>hello world</Button>
   </div>
 </template>
 
