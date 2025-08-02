@@ -7,7 +7,7 @@ import '~/styles/tailwind.css'
 
 function init() {
   const app = createApp(App)
-  // 生产环境开启自动更新检查
+  // Enable auto-update check in production environment
   if (import.meta.env.MODE === 'production') {
     autoRefresh()
   }

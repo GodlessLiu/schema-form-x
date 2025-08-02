@@ -3,6 +3,7 @@ app:
   description: App description
   global:
     loadingText: Loading...
+    loadSourceError: Failed to load the resource
   settings:
     title: App Settings
     description: Configure the global configuration of the website

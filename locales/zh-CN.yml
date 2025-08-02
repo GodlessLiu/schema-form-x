@@ -3,6 +3,7 @@ app:
   description: 应用描述
   global:
     loadingText: 加载中...
+    loadSourceError: 加载资源失败
   settings:
     title: 网站设置
     description: 配置网站的全局配置

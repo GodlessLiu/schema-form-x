@@ -1,4 +1,5 @@
 import { computed, readonly, ref } from 'vue'
+import { toast } from 'vue-sonner'
 
 // Global loading state
 const isLoading = ref(false)
@@ -8,6 +9,8 @@ const loadingCount = ref(0)
 export function useGlobalLoading() {
   // Computed property to check if any loading is active
   const isAnyLoading = computed(() => loadingCount.value > 0)
+
+  const { t } = useI18n()
 
   // Start loading with optional text
   function startLoading(text?: string) {
@@ -42,12 +45,22 @@ export function useGlobalLoading() {
   // Async wrapper for automatic loading management
   async function withLoading<T>(
     asyncFn: () => Promise<T>,
-    text?: string
+    text?: string,
   ): Promise<T> {
     try {
       startLoading(text)
       return await asyncFn()
-    } finally {
+    }
+    catch (error) {
+      toast.error(t('app.global.loadSourceError'), {
+        style: {
+          background: '#ff0000',
+          color: '#fff',
+        },
+      })
+      return new Promise<T>((_, reject) => reject(error))
+    }
+    finally {
       stopLoading()
     }
   }
@@ -58,7 +71,7 @@ export function useGlobalLoading() {
     loadingText: readonly(loadingText),
     loadingCount: readonly(loadingCount),
     isAnyLoading,
-    
+
     // Methods
     startLoading,
     stopLoading,

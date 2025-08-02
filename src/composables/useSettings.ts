@@ -12,41 +12,41 @@ export function useSettings() {
     language: 'zh-CN',
   })
 
-  const { startLoading, stopLoading } = useGlobalLoading()
+  const { withLoading } = useGlobalLoading()
 
-  // 修改主题色
+  // Change theme color
   async function toggleTheme(name: string) {
-    startLoading()
-    await loadThemeAsync(name)
-    document.documentElement.classList.replace(`theme-${settings.value.theme.color}`, `theme-${name}`)
-    settings.value.theme.color = name
-    stopLoading()
+    withLoading(async () => {
+      await loadThemeAsync(name)
+      document.documentElement.classList.replace(`theme-${settings.value.theme.color}`, `theme-${name}`)
+      settings.value.theme.color = name
+    })
   }
 
-  // 修改主题模式
+  // Change theme mode
   function toggleDark(mode: Theme) {
     settings.value.theme.mode = mode
     document.documentElement.classList.toggle('dark', mode === 'dark')
   }
 
-  // 初始化主题
+  // Initialize theme
   function initSettings() {
-    // 初始化主题色
+    // Initialize theme color
     document.documentElement.classList.add(`theme-${settings.value.theme.color}`)
-    // 加载css资源
+    // Load CSS resources
     loadThemeAsync(settings.value.theme.color)
-    // 初始化主题模式
+    // Initialize theme mode
     document.documentElement.classList.toggle('dark', settings.value.theme.mode === 'dark')
-    // 初始化语言
+    // Initialize language
     loadLanguageAsync(settings.value.language)
   }
 
-  // 设置语言
+  // Set language
   async function toggleLanguage(lang: string) {
-    startLoading()
-    settings.value.language = lang
-    await loadLanguageAsync(lang)
-    stopLoading()
+    withLoading(async () => {
+      await loadLanguageAsync(lang)
+      settings.value.language = lang
+    })
   }
 
   return { settings, toggleTheme, initTheme: initSettings, toggleDark, toggleLanguage }

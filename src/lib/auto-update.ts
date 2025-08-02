@@ -1,5 +1,5 @@
-let lastSrcs: any // 上一次获取到的script地址
-let needTip = true // 默认开启提示
+let lastSrcs: any // Last obtained script addresses
+let needTip = true // Default enable prompt
 
 const scriptReg = /<script.*src=["'](?<src>[^"']+)/g
 
@@ -32,18 +32,18 @@ async function needUpdate() {
   lastSrcs = newScripts
   return result
 }
-const DURATION = 5 * 60 * 1000 // 5分钟检查一次
+const DURATION = 5 * 60 * 1000 // Check every 5 minutes
 
 export function autoRefresh() {
   setTimeout(async () => {
     const willUpdate = await needUpdate()
     if (willUpdate) {
-      // 延时更新，防止部署未完成用户就刷新空白
+      // Delayed update to prevent blank page refresh before deployment is complete
       setTimeout(() => {
-        alert('检测到页面有内容更新，为了功能的正常使用，是否立即刷新?')
+        alert('Content update detected. To ensure normal functionality, refresh now?')
         location.reload()
       }, 30000)
-      needTip = false // 关闭更新提示，防止重复提醒
+      needTip = false // Close update prompt to prevent duplicate reminders
     }
     if (needTip) {
       autoRefresh()

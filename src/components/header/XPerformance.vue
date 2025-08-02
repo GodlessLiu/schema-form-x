@@ -1,4 +1,4 @@
-<!-- 网页表现相关设置 -->
+<!-- Web performance related settings -->
 <script setup lang="ts">
 import { useSettings } from '~/composables/useSettings'
 import { THEME_MODES } from '~/constants/App'
@@ -12,7 +12,7 @@ const { settings, toggleTheme, toggleDark, toggleLanguage } = useSettings()
 <template>
   <div>
     <div>
-      <!-- 主题颜色 -->
+      <!-- Theme color -->
       <h5 class="text-sm font-medium leading-none py-2">
         {{ t('app.settings.performance.color.title') }}
       </h5>
@@ -30,7 +30,7 @@ const { settings, toggleTheme, toggleDark, toggleLanguage } = useSettings()
           </button>
         </div>
       </div>
-      <!-- 主题模式 -->
+      <!-- Theme mode -->
       <h5 class="text-sm font-medium leading-none py-2">
         {{ t('app.settings.performance.theme.title') }}
       </h5>
@@ -51,7 +51,7 @@ const { settings, toggleTheme, toggleDark, toggleLanguage } = useSettings()
       </div>
     </div>
     <div>
-      <!-- 网站语言 -->
+      <!-- Website language -->
       <h5 class="text-sm font-medium leading-none py-2">
         {{ t('app.settings.performance.language.title') }}
       </h5>
