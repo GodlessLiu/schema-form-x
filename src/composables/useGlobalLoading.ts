@@ -62,6 +62,8 @@ export function useGlobalLoading() {
 
     try {
       startLoading(opts)
+      // Min loading duration
+      await new Promise(resolve => setTimeout(resolve, 300))
       return await asyncFn()
     }
     catch (error) {
