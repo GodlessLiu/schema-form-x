@@ -1,3 +1,4 @@
+import NProgress from 'nprogress'
 import { createRouter, createWebHistory } from 'vue-router'
 import BaseLayout from '~/layouts/BaseLayout.vue'
 
@@ -16,6 +17,14 @@ const router = createRouter({
       ],
     },
   ],
+})
+
+router.beforeEach((to, from) => {
+  if (to.path !== from.path)
+    NProgress.start()
+})
+router.afterEach(() => {
+  NProgress.done()
 })
 
 export default router
