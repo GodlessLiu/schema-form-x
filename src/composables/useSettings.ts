@@ -1,6 +1,6 @@
 import type { Theme } from '~/constants/App'
-import { loadLanguageAsync } from '~/modules/i18n'
-import { loadThemeAsync } from '~/modules/theme'
+import { loadedLanguages, loadLanguageAsync } from '~/modules/i18n'
+import { loadedThemes, loadThemeAsync } from '~/modules/theme'
 import { useGlobalLoading } from './useGlobalLoading'
 
 const DEFAULT_SETTINGS: Settings = {
@@ -17,13 +17,22 @@ export function useSettings() {
 
   // Change theme color
   async function toggleTheme(name: string) {
-    await withLoading(async () => {
-      await loadThemeAsync(name)
-      document.documentElement.classList.replace(
-        `theme-${settings.value.theme.color}`,
-        `theme-${name}`,
-      )
-      settings.value.theme.color = name
+    await loadThemeAsync(name)
+    document.documentElement.classList.replace(
+      `theme-${settings.value.theme.color}`,
+      `theme-${name}`,
+    )
+    settings.value.theme.color = name
+  }
+
+  // Change theme color with global loading
+  async function toggleThemeWithLoading(name: string) {
+    if (loadedThemes.includes(name)) {
+      toggleTheme(name)
+      return
+    }
+    withLoading(async () => {
+      toggleTheme(name)
     })
   }
 
@@ -57,9 +66,18 @@ export function useSettings() {
 
   // Set language
   async function toggleLanguage(lang: string) {
-    await withLoading(async () => {
-      await loadLanguageAsync(lang)
-      settings.value.language = lang
+    await loadLanguageAsync(lang)
+    settings.value.language = lang
+  }
+
+  // Set language with global loading
+  async function toggleLanguageWithLoading(lang: string) {
+    if (loadedLanguages.includes(lang)) {
+      toggleLanguage(lang)
+      return
+    }
+    withLoading(async () => {
+      toggleLanguage(lang)
     })
   }
 
@@ -71,10 +89,10 @@ export function useSettings() {
 
   return {
     settings,
-    toggleTheme,
+    toggleTheme: toggleThemeWithLoading,
     initTheme: initSettings,
     toggleDark,
-    toggleLanguage,
+    toggleLanguage: toggleLanguageWithLoading,
     resetSettings,
   }
 }

@@ -4,7 +4,7 @@ const themesMap = Object.fromEntries(Object.entries(import.meta.glob('../styles/
 
 export const availableThemes = Object.keys(themesMap)
 
-const loadedThemes: string[] = []
+export const loadedThemes: string[] = []
 
 export async function loadThemeAsync(theme: string) {
   if (loadedThemes.includes(theme))

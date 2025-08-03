@@ -17,7 +17,7 @@ const localesMap = Object.fromEntries(
 
 export const availableLocales = Object.keys(localesMap)
 
-const loadedLanguages: string[] = []
+export const loadedLanguages: string[] = []
 
 function setI18nLanguage(lang: Locale) {
   i18n.global.locale.value = lang as any
