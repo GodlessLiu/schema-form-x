@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import { toast } from 'vue-sonner'
-
-useTitle('Home')
 </script>
 
 <template>
