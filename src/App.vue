@@ -2,7 +2,6 @@
 import { useSettings } from '~/composables/useSettings'
 import 'vue-sonner/style.css'
 
-useTitle('Hello world!!')
 const { initTheme } = useSettings()
 
 onMounted(() => {
@@ -11,5 +10,5 @@ onMounted(() => {
 </script>
 
 <template>
-    <router-view />
+  <router-view />
 </template>

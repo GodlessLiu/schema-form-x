@@ -1,8 +1,9 @@
 import path from 'node:path'
 import { fileURLToPath, URL } from 'node:url'
 import VueI18n from '@intlify/unplugin-vue-i18n/vite'
-
 import tailwindcss from '@tailwindcss/vite'
+
+import { unheadVueComposablesImports } from '@unhead/vue'
 import vue from '@vitejs/plugin-vue'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
@@ -21,7 +22,7 @@ export default defineConfig({
         /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
         /\.vue$/,
       ],
-      imports: ['vue', 'vue-router', 'pinia', 'vue-i18n', '@vueuse/core'],
+      imports: ['vue', 'vue-router', 'pinia', 'vue-i18n', '@vueuse/core', unheadVueComposablesImports],
       dts: 'typings/auto-imports.d.ts',
 
     }),
