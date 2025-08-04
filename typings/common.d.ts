@@ -1,3 +1,5 @@
+/// <reference types="vite-plugin-pwa/client" />
+
 declare global {
   /**
    * Vue app module type for plugin registration
