@@ -16,8 +16,10 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@tanstack/vue-query": "^5.83.1",
     "@unhead/vue": "^2.0.2",
     "@vueuse/core": "^13.6.0",
+    "axios": "^1.11.0",
     "lucide-vue-next": "^0.526.0",
     "nprogress": "^0.2.0",
     "pinia": "^3.0.3",
