@@ -1,1 +1,1 @@
-export { default as GlobalLoading } from './GlobalLoading.vue' 
+export { default as GlobalLoading } from './GlobalLoading.vue'

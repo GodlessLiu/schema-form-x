@@ -159,25 +159,29 @@ async function handleCommandSelect(value: string) {
         <!-- Command Groups -->
         <template v-for="group in commandGroups" :key="group.title">
           <CommandGroup :heading="group.title">
-            <CommandItem
-              v-for="item in group.items"
-              :key="item.value"
-              :value="item.value"
-              :disabled="item.disabled"
-              @select="handleCommandSelect(item.value)"
-            >
-              <span
-                v-if="item.value.startsWith('theme-')"
-                :style="{ color: `var(--color-${item.value.replace('theme-', '')})` }"
+            <div class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-1 p-1">
+              <CommandItem
+                v-for="item in group.items"
+                :key="item.value"
+                :value="item.value"
+                :disabled="item.disabled"
+                class="w-full"
+                @select="handleCommandSelect(item.value)"
               >
-                <span v-if="item.icon" :class="item.icon" />
-                {{ item.label }}
-              </span>
-              <span v-else>
-                <span v-if="item.icon" :class="item.icon" />
-                {{ item.label }}
-              </span>
-            </CommandItem>
+                <span
+                  v-if="item.value.startsWith('theme-')"
+                  :style="{ color: `var(--color-${item.value.replace('theme-', '')})` }"
+                  class="flex items-center justify-center gap-2 text-center"
+                >
+                  <span v-if="item.icon" :class="item.icon" />
+                  {{ item.label }}
+                </span>
+                <span v-else class="flex items-center justify-center gap-2 text-center">
+                  <span v-if="item.icon" :class="item.icon" />
+                  {{ item.label }}
+                </span>
+              </CommandItem>
+            </div>
           </CommandGroup>
         </template>
       </CommandList>

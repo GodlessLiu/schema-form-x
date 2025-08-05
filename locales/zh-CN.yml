@@ -27,6 +27,6 @@ app:
         dark: 暗色
       language:
         title: 语言
-        en: 英语
-        zh-CN: 简体中文
+        en: 英文
+        zh-CN: 中文
       empty: 空

@@ -32,7 +32,7 @@ export function useSettings() {
       return
     }
     withLoading(async () => {
-      toggleTheme(name)
+      await toggleTheme(name)
     })
   }
 
@@ -77,7 +77,7 @@ export function useSettings() {
       return
     }
     withLoading(async () => {
-      toggleLanguage(lang)
+      await toggleLanguage(lang)
     })
   }
 
