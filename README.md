@@ -15,4 +15,5 @@ SchemaFormX - 基于JSON Schema的智能动态表单生成器
 - [ ] 修改`App.vue`下的标题
 - [ ] 修改`public`下的图标
 - [ ] 修改`locales`下的语言资源，如: `app.title`、`app.description`等
+- [ ] 修改`vite.config.ts`下的`VitePWA`配置
 - [ ] 整理README.md
