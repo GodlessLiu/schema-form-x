@@ -1,6 +1,6 @@
 app:
-  title: App name
-  description: App description
+  title: CreateQ | Image Transformer
+  description: Unleash Creativity with CreateQ!
   global:
     loadingText: Loading...
     loadSourceError: Failed to load the resource
@@ -30,3 +30,6 @@ app:
         en: English
         zh-CN: Chinese
       empty: No results found.
+  form:
+    send: Send
+    select: Select a type

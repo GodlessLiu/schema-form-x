@@ -80,6 +80,33 @@ declare global {
     /** Selected language code (e.g., 'zh-CN', 'en') */
     language: string
   }
+
+  interface FormSchemaType {
+    /** Field name, used as the key in form data */
+    name: string
+    /**
+     * Field type, options: 'input' | 'select' | 'image-upload'
+     * input: standard text input
+     * select: dropdown select
+     * image-upload: image upload control
+     */
+    type: 'input' | 'select' | 'image-upload'
+    /** Field label, displayed before the form item */
+    label: string
+    /** Field validation rule, zod schema object */
+    rule: z.ZodType<any, any>
+    /** Field description, shown below the form item (optional) */
+    description?: string
+    /** Additional options for select field (optional) */
+    options?: { label: string, value: any }[]
+    /** Placeholder text for input field (optional) */
+    placeholder?: string
+  }
+
+  interface FormConfigProps {
+    /** Array of form schema configs, each item describes a form field */
+    formSchema: FormSchemaType[]
+  }
 }
 
 export {}

@@ -10,16 +10,21 @@ import Components from 'unplugin-vue-components/vite'
 import vueDevTools from 'vite-plugin-vue-devtools'
 
 export default [
-  vue(),
+  vue({
+    script: {
+      globalTypeFiles: [path.resolve(__dirname, '../', 'typings/common.d.ts')],
+    },
+  }),
   tailwindcss(),
   AutoImport({
     include: [
       /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
       /\.vue$/,
     ],
-    imports: ['vue', 'vue-router', 'pinia', 'vue-i18n', '@vueuse/core', unheadVueComposablesImports],
+    imports: ['vue', 'vue-router', 'pinia', 'vue-i18n', 'vee-validate', '@vueuse/core', unheadVueComposablesImports, {
+      '@vueuse/router': ['useRouteQuery'],
+    }],
     dts: 'typings/auto-imports.d.ts',
-
   }),
   Components({
     include: [
