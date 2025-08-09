@@ -90,7 +90,7 @@ declare global {
      * select: dropdown select
      * image-upload: image upload control
      */
-    type: 'input' | 'select' | 'image-upload'
+    type: 'input' | 'select' | 'image-upload' | 'textarea' | 'number-field' | 'sizes'
     /** Field label, displayed before the form item */
     label: string
     /** Field validation rule, zod schema object */
@@ -103,6 +103,12 @@ declare global {
     placeholder?: string
     /** Function to determine if the field is visible (optional) */
     ifFn?: (formData: any) => boolean
+    /** Maximum value for number field (optional) */
+    max?: number
+    /** Minimum value for number field (optional) */
+    min?: number
+    /** Default value for the field (optional) */
+    defaultValue?: any
   }
 
   interface FormConfigProps {

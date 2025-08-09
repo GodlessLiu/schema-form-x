@@ -4,7 +4,7 @@ app:
   global:
     loadingText: Loading...
     loadSourceError: Failed to load the resource
-    excuteError: Failed to execute the task
+    executeError: Failed to execute the task
   settings:
     title: App Settings
     description: Configure the global configuration of the website
@@ -35,7 +35,7 @@ app:
     send: Send
     uploading: Uploading...
     imageTransformer:
-      title: Image Style Transformer
+      title: Image Style Transfer
       description: Based on the original image provided by the user and the desired style, other types of images can be generated
       fileUpload:
         label: Upload Image
@@ -45,5 +45,35 @@ app:
         message: Please select a style
         placeholder: Select a style
       reffileUpload:
-        label: Upload ref Image
-        message: Please upload a ref image
+        label: Upload Reference Image
+        message: Please upload a reference image
+    text2Image:
+      title: Text-to-Image
+      description: Generate images based on prompts in English or Chinese
+      prompt:
+        label: Prompt
+        message: Please enter a prompt
+        placeholder: A positive prompt describing the desired elements and visual characteristics
+      nagetivePrompt:
+        label: Negative Prompt
+        message: Please enter a negative prompt
+        placeholder: A negative prompt describing what you do not want to see in the image
+      sizes:
+        label: Size
+        message: Please select a size
+        placeholder: Select a size
+      n:
+        label: Quantity
+        message: Please select a quantity
+        placeholder: Quantity
+      seed:
+        label: Seed
+        message: Please enter a seed
+        placeholder: Random seed
+      prompt_extend:
+        label: Smart Rewrite
+        placeholder: Select
+      watermark:
+        label: Watermark
+        placeholder: Select
+

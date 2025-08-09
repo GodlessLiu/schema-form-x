@@ -45,3 +45,44 @@ interface CreateTaskFaildResponse {
 }
 
 export type CreateTaskResponse = CreateTaskSuccessResponse & CreateTaskFaildResponse
+
+export interface TextGenerationImageRequest {
+  prompt: string
+  size: string
+  n: number
+  seed?: number
+  prompt_extend: boolean
+  watermark: boolean
+}
+
+export interface Text2ImageItemResult {
+  orig_prompt: string
+  actual_prompt: string
+  url: string
+}
+
+export interface TaskMetrics {
+  TOTAL: number
+  SUCCEEDED: number
+  FAILED: number
+}
+
+export interface Text2ImageOutput {
+  task_id: string
+  task_status: string // 可改为联合类型：'PENDING' | 'RUNNING' | 'SUCCEEDED' | 'FAILED'
+  submit_time: string
+  scheduled_time: string
+  end_time: string
+  results: Text2ImageItemResult[]
+  task_metrics: TaskMetrics
+}
+
+export interface Text2ImageUsage {
+  image_count: number
+}
+
+export interface Text2ImageResponse {
+  request_id: string
+  output: Text2ImageOutput
+  usage: Text2ImageUsage
+}

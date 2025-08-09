@@ -13,15 +13,16 @@ const tabList = [
     value: toRaw(ImageTransformer),
   },
   {
-    label: 'app.form.Text2Image.title',
+    label: 'app.form.text2Image.title',
     tabName: 'text2Image',
     value: toRaw(Text2Image),
   },
 ] as const
+const tab = useRouteQuery('tab') as Ref<typeof tabList[number]['tabName']>
 
-const tabsValue = ref<typeof tabList[number]['tabName']>('transformer')
+const tabsValue = ref<typeof tabList[number]['tabName']>(tab.value || 'transformer')
 
-const tab = useRouteQuery('tab')
+useTitle(() => `${t('app.title')} - ${t(tabList.find(t => t.tabName === tab.value)?.label || 'app.form.imageTransformer.title')}`)
 
 watch(tabsValue, (val) => {
   tab.value = val
@@ -29,10 +30,6 @@ watch(tabsValue, (val) => {
 }, {
   immediate: true,
 })
-
-useHead(() => ({
-  title: t('app.title'),
-}))
 </script>
 
 <template>

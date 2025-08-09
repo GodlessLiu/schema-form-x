@@ -47,3 +47,30 @@ app:
       reffileUpload:
         label: 参考图片
         message: 请上传一张参考图片
+    text2Image:
+      title: 文本生成图像
+      description: 根据中英文提示词生成图像
+      prompt:
+        label: 提示词
+        message: 请输入提示词
+        placeholder: 正向提示词，用来描述生成图像中期望包含的元素和视觉特点
+      nagetivePrompt:
+        label: 负面提示词
+        message: 请输入负面提示词
+        placeholder: 反向提示词，用来描述不希望在画面中看到的内容，可以对画面进行限制
+      sizes:
+        label: 尺寸
+        message: 请选择尺寸
+        placeholder: 选择尺寸
+      n:
+        label: 生成数量
+        message: 请选择生成数量
+        placeholder: 生成数量
+      seed:
+        label: 随机种子
+        message: 请输入随机种子
+        placeholder: 随机种子
+      prompt_extend:
+        label: 智能改写
+      watermark:
+        label: 水印

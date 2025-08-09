@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { ImageTransformerResponse } from '~/api/types'
 import { aliyunImageStyleTransformerApi } from '~/api'
 import { useAliyunGeneration } from '~/composables/useAlitunGeneration'
 
@@ -30,6 +31,7 @@ const formSchema = computed<FormSchemaType[]>(() => [
       { label: '清雅国风', value: 8 },
       { label: '喜迎新年', value: 9 },
     ],
+    defaultValue: 2,
   },
   {
     label: t('app.form.imageTransformer.reffileUpload.label'),
@@ -42,7 +44,7 @@ const formSchema = computed<FormSchemaType[]>(() => [
   },
 ])
 
-const { exceuteTask, task_result, isActive } = useAliyunGeneration()
+const { exceuteTask, task_result, isLoading } = useAliyunGeneration<ImageTransformerResponse>()
 
 async function handleSubmit(data: any) {
   exceuteTask(data, aliyunImageStyleTransformerApi)
@@ -56,8 +58,8 @@ async function handleSubmit(data: any) {
       <CardDescription>{{ t('app.form.imageTransformer.description') }}</CardDescription>
     </CardHeader>
     <CardContent>
-      <form-config :form-schema="formSchema" :loading="isActive" @submit="handleSubmit" />
-      <img v-if="task_result.success" :src="task_result.url" alt="transformed image" class="mt-4 rounded-sm">
+      <form-config :form-schema="formSchema" :loading="isLoading" @submit="handleSubmit" />
+      <img v-if="task_result.success" :src="task_result.response.output.results[0].url" alt="transformed image" class="mt-4 rounded-sm">
     </CardContent>
   </Card>
 </template>
