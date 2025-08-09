@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import ImageTransformer from '~/components/apps/imageTransformer/ImageTransformer.vue'
-import Text2Image from '~/components/apps/text2Image/Text2Image.vue'
+import ImageTransformer from './imageTransformer/ImageTransformer.vue'
+import Text2Image from './text2Image/Text2Image.vue'
 
 const { t } = useI18n()
 
@@ -44,7 +44,7 @@ useHead(() => ({
         </TabsTrigger>
       </TabsList>
       <keep-alive>
-        <component :is="activeTabComponent" />
+        <component :is="activeTabComponent" class="mb-10" />
       </keep-alive>
     </Tabs>
   </div>

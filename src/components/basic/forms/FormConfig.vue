@@ -1,22 +1,13 @@
 <script setup lang="ts">
-import { toTypedSchema } from '@vee-validate/zod'
 import { Loader2 } from 'lucide-vue-next'
-import * as z from 'zod'
 import { FormField } from '~/components/ui/form'
-import { array2Object } from '~/lib/utils'
 
 const { formSchema, loading } = defineProps<FormConfigProps>()
 const emit = defineEmits(['submit'])
 
-// Recompute the validation schema when the incoming schema (and its translations) change
-const zodFormSchema = computed(() => toTypedSchema(z.object(array2Object(formSchema))))
-
-const { isFieldDirty, handleSubmit, values } = useForm({
-  validationSchema: zodFormSchema,
-})
+const { isFieldDirty, handleSubmit, values } = useForm({})
 
 const { t } = useI18n()
-
 const onSubmit = handleSubmit((values) => {
   emit('submit', values)
 })
@@ -26,7 +17,7 @@ const onSubmit = handleSubmit((values) => {
   <div>
     <form class="space-y-6" @submit="onSubmit">
       <div v-for="schema in formSchema" :key="schema.name">
-        <FormField v-if="schema.ifFn ? schema.ifFn(values) : true" v-slot="{ componentField }" :name="schema.name" :validate-on-blur="!isFieldDirty">
+        <FormField v-if="schema.ifFn ? schema.ifFn(values) : true" v-slot="{ componentField }" rules="required" :name="schema.name" :validate-on-blur="!isFieldDirty">
           <FormItem>
             <FormLabel>{{ schema.label }}</FormLabel>
             <!-- 输入框 -->

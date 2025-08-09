@@ -2,6 +2,8 @@ import { createApp } from 'vue'
 
 import App from './App.vue'
 
+import '~/components/basic/forms/validate'
+
 import '~/styles/tailwind.css'
 
 function init() {

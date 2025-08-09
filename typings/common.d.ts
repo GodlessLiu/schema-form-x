@@ -94,7 +94,7 @@ declare global {
     /** Field label, displayed before the form item */
     label: string
     /** Field validation rule, zod schema object */
-    rule: z.ZodType<any, any>
+    rules?: string 
     /** Field description, shown below the form item (optional) */
     description?: string
     /** Additional options for select field (optional) */

@@ -4,6 +4,7 @@ app:
   global:
     loadingText: Loading...
     loadSourceError: Failed to load the resource
+    excuteError: Failed to execute the task
   settings:
     title: App Settings
     description: Configure the global configuration of the website

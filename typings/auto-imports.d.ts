@@ -6,8 +6,6 @@
 // biome-ignore lint: disable
 export {}
 declare global {
-  const /: typeof import('0')['/']
-  const @: typeof import('0')['@']
   const EffectScope: typeof import('vue')['EffectScope']
   const ErrorMessage: typeof import('vee-validate')['ErrorMessage']
   const FieldContextKey: typeof import('vee-validate')['FieldContextKey']

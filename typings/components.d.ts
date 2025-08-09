@@ -43,7 +43,6 @@ declare module 'vue' {
     FormMessage: typeof import('./../src/components/ui/form/FormMessage.vue')['default']
     GlobalLoading: typeof import('./../src/components/ui/loading/GlobalLoading.vue')['default']
     ImageTransformer: typeof import('./../src/components/apps/imageTransformer/ImageTransformer.vue')['default']
-    ImageTransformerSelect: typeof import('./../src/components/apps/imageTransformer/ImageTransformerSelect.vue')['default']
     ImageUpload: typeof import('./../src/components/basic/forms/ImageUpload.vue')['default']
     Input: typeof import('./../src/components/ui/input/Input.vue')['default']
     Label: typeof import('./../src/components/ui/label/Label.vue')['default']
@@ -78,11 +77,8 @@ declare module 'vue' {
     Textarea: typeof import('./../src/components/ui/textarea/Textarea.vue')['default']
     XCommand: typeof import('./../src/components/XCommand.vue')['default']
     XFooter: typeof import('./../src/components/XFooter.vue')['default']
-    XFormBox: typeof import('../src/components/XMessageBox.vue')['default']
     XHeader: typeof import('./../src/components/header/XHeader.vue')['default']
-    XMessageBox: typeof import('./../src/components/XMessageBox.vue')['default']
     XPerformance: typeof import('./../src/components/header/XPerformance.vue')['default']
-    XSelect: typeof import('./../src/components/XSelect.vue')['default']
     XSettings: typeof import('./../src/components/header/XSettings.vue')['default']
   }
 }
