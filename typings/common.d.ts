@@ -101,11 +101,14 @@ declare global {
     options?: { label: string, value: any }[]
     /** Placeholder text for input field (optional) */
     placeholder?: string
+    /** Function to determine if the field is visible (optional) */
+    ifFn?: (formData: any) => boolean
   }
 
   interface FormConfigProps {
     /** Array of form schema configs, each item describes a form field */
     formSchema: FormSchemaType[]
+    loading: boolean
   }
 }
 

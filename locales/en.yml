@@ -43,3 +43,6 @@ app:
         label: Style
         message: Please select a style
         placeholder: Select a style
+      reffileUpload:
+        label: Upload ref Image
+        message: Please upload a ref image

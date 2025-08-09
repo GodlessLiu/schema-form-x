@@ -66,5 +66,12 @@ export default defineConfig({
   server: {
     host: true,
     open: true,
+    proxy:{
+      '/aliyun-api': {
+        target: 'https://dashscope.aliyuncs.com/api',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/aliyun-api/, '')
+      }
+    }
   },
 })

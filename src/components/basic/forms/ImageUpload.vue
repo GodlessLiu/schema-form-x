@@ -1,15 +1,13 @@
 <!-- 图片上传组件 -->
 <script setup lang="ts">
-import { mockUploadImage } from '~/api/mock'
-
 const emits = defineEmits<{
   (e: 'update:modelValue', value: string): void
   (e: 'change', value: string): void
 }>()
 const { t } = useI18n()
 const isUploading = ref(false)
-
 const imageUrl = ref('')
+const inputId = useId()
 
 function handleFileChange(e: Event) {
   const file = (e.target as HTMLInputElement).files?.[0]
@@ -20,10 +18,8 @@ function handleFileChange(e: Event) {
     const base64 = ev.target?.result as string
     imageUrl.value = base64
     isUploading.value = true
-    // TODO: modify this to use a real API
-    const url = await mockUploadImage()
-    emits('update:modelValue', url)
-    emits('change', url)
+    emits('update:modelValue', base64)
+    emits('change', base64)
     isUploading.value = false
   }
   reader.readAsDataURL(file)
@@ -33,11 +29,11 @@ function handleFileChange(e: Event) {
 <template>
   <div>
     <div>
-      <label for="image-upload" class="inline-block w-[120px] aspect-square cursor-pointer box-content leading-[120px] text-3xl text-center border-[1px] border-foreground rounded-md">
+      <label :for="inputId" class="inline-block w-[120px] aspect-square cursor-pointer box-content leading-[120px] text-3xl text-center border-[1px] border-foreground rounded-md">
         <span v-if="!imageUrl" class="icon-[ic--baseline-plus]" />
         <img v-else :src="imageUrl" class="w-full h-full object-cover rounded-md">
       </label>
-      <input id="image-upload" type="file" class="hidden" accept="image/*" @change="handleFileChange">
+      <input :id="inputId" type="file" class="hidden" accept="image/*" @change="handleFileChange">
       <br>
       <small v-show="isUploading" class="text-[var(--primary)]">{{ t('app.form.uploading') }}</small>
     </div>

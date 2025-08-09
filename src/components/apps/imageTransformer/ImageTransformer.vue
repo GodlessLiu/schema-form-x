@@ -1,18 +1,19 @@
 <script setup lang="ts">
 import * as z from 'zod'
+import { aliyunImageStyleTransformerApi, getResultByTaskId } from '~/api'
 
 const { t } = useI18n()
 
 const formSchema = computed<FormSchemaType[]>(() => [
   {
     label: t('app.form.imageTransformer.fileUpload.label'),
-    name: 'file',
+    name: 'image_url',
     type: 'image-upload',
     rule: z.string(t('app.form.imageTransformer.fileUpload.message')),
   },
   {
     label: t('app.form.imageTransformer.styleSelect.label'),
-    name: 'type',
+    name: 'style_index',
     type: 'select',
     rule: z.number(t('app.form.imageTransformer.styleSelect.message')),
     placeholder: t('app.form.imageTransformer.styleSelect.placeholder'),
@@ -30,10 +31,45 @@ const formSchema = computed<FormSchemaType[]>(() => [
       { label: '喜迎新年', value: 9 },
     ],
   },
+  {
+    label: t('app.form.imageTransformer.reffileUpload.label'),
+    name: 'style_ref_url',
+    type: 'image-upload',
+    rule: z.string(t('app.form.imageTransformer.reffileUpload.message')),
+    ifFn(formData) {
+      return formData.style_index === -1
+    },
+  },
 ])
 
-function handleSubmit(data: any) {
-  console.log(data)
+// 任务ID
+const task_id = ref<string>('c324cbf3-cd59-44d2-8fcf-f97a40a29d7b')
+// 任务结果内容
+const task_result = ref<string>('')
+
+// 轮询获得任务结果
+const { resume: run, pause, isActive } = useIntervalFn(async () => {
+  if (task_id.value) {
+    const data = await getResultByTaskId(task_id.value)
+    if (data.output.task_status === 'SUCCEEDED') {
+      task_result.value = data.output.results[0].url
+      pause()
+    }
+    else if (data.output.task_status === 'FAILED') {
+      task_result.value = '任务失败'
+      pause()
+    }
+  }
+}, 1000, {
+  immediate: false,
+})
+
+async function handleSubmit(data: any) {
+  const res = await aliyunImageStyleTransformerApi(data)
+  if (res.output.task_id) {
+    task_id.value = res.output.task_id
+    run()
+  }
 }
 </script>
 
@@ -44,11 +80,10 @@ function handleSubmit(data: any) {
       <CardDescription>{{ t('app.form.imageTransformer.description') }}</CardDescription>
     </CardHeader>
     <CardContent>
-      <form-config :form-schema="formSchema" @submit="handleSubmit" />
+      <form-config :form-schema="formSchema" :loading="isActive" @submit="handleSubmit" />
+      <img v-if="task_result" :src="task_result" alt="transformed image" class="mt-4 rounded-sm">
     </CardContent>
   </Card>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

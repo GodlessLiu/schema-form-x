@@ -8,12 +8,12 @@ const activeTabComponent = shallowRef<any>()
 
 const tabList = [
   {
-    label: t('app.form.imageTransformer.title'),
+    label: 'app.form.imageTransformer.title',
     tabName: 'transformer',
     value: toRaw(ImageTransformer),
   },
   {
-    label: 'Text2Image',
+    label: 'app.form.Text2Image.title',
     tabName: 'text2Image',
     value: toRaw(Text2Image),
   },
@@ -40,7 +40,7 @@ useHead(() => ({
     <Tabs v-model="tabsValue" default-value="Transformer">
       <TabsList>
         <TabsTrigger v-for="t2 in tabList" :key="t2.tabName" :value="t2.tabName">
-          {{ t2.label }}
+          {{ t(t2.label) }}
         </TabsTrigger>
       </TabsList>
       <keep-alive>

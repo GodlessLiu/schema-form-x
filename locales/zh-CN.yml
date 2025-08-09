@@ -43,3 +43,6 @@ app:
         label: 风格
         message: 请选择一种风格
         placeholder: 选择风格
+      reffileUpload:
+        label: 参考图片
+        message: 请上传一张参考图片
