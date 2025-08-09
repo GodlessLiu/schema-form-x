@@ -1,19 +1,21 @@
 <script setup lang="ts">
 import * as z from 'zod'
 
-const formSchema: FormSchemaType[] = [
+const { t } = useI18n()
+
+const formSchema = computed<FormSchemaType[]>(() => [
   {
-    label: '上传文件',
+    label: t('app.form.imageTransformer.fileUpload.label'),
     name: 'file',
     type: 'image-upload',
-    rule: z.string(),
+    rule: z.string(t('app.form.imageTransformer.fileUpload.message')),
   },
   {
-    label: '风格',
+    label: t('app.form.imageTransformer.styleSelect.label'),
     name: 'type',
     type: 'select',
-    rule: z.number(),
-    placeholder: '请选择风格',
+    rule: z.number(t('app.form.imageTransformer.styleSelect.message')),
+    placeholder: t('app.form.imageTransformer.styleSelect.placeholder'),
     options: [
       { label: '参考上传图像风格', value: -1 },
       { label: '复古漫画', value: 0 },
@@ -28,7 +30,7 @@ const formSchema: FormSchemaType[] = [
       { label: '喜迎新年', value: 9 },
     ],
   },
-]
+])
 
 function handleSubmit(data: any) {
   console.log(data)
@@ -38,8 +40,8 @@ function handleSubmit(data: any) {
 <template>
   <Card>
     <CardHeader>
-      <CardTitle>图像风格迁移</CardTitle>
-      <CardDescription>根据用户提供原始图片，再选择自己想要的风格，就可以生成其他不同类型的图像</CardDescription>
+      <CardTitle>{{ t('app.form.imageTransformer.title') }}</CardTitle>
+      <CardDescription>{{ t('app.form.imageTransformer.description') }}</CardDescription>
     </CardHeader>
     <CardContent>
       <form-config :form-schema="formSchema" @submit="handleSubmit" />

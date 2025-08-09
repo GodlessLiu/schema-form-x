@@ -5,10 +5,10 @@ import { FormField } from '~/components/ui/form'
 import { array2Object } from '~/lib/utils'
 
 const { formSchema } = defineProps<FormConfigProps>()
-
 const emit = defineEmits(['submit'])
 
-const zodFormSchema = toTypedSchema(z.object(array2Object(formSchema)))
+// Recompute the validation schema when the incoming schema (and its translations) change
+const zodFormSchema = computed(() => toTypedSchema(z.object(array2Object(formSchema))))
 
 const { isFieldDirty, handleSubmit } = useForm({
   validationSchema: zodFormSchema,

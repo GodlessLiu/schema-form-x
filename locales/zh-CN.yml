@@ -32,4 +32,13 @@ app:
       empty: 空
   form:
     send: 发送
-    select: 选择一个风格
+    imageTransformer:
+      title: 图像风格迁移
+      description: 根据用户提供原始图片，再选择自己想要的风格，就可以生成其他不同类型的图像
+      fileUpload:
+        label: 上传图片
+        message: 请上传一张图片
+      styleSelect:
+        label: 风格
+        message: 请选择一种风格
+        placeholder: 选择风格

@@ -32,4 +32,14 @@ app:
       empty: No results found.
   form:
     send: Send
-    select: Select a type
+    uploading: Uploading...
+    imageTransformer:
+      title: Image Style Transformer
+      description: Based on the original image provided by the user and the desired style, other types of images can be generated
+      fileUpload:
+        label: Upload Image
+        message: Please upload an image
+      styleSelect:
+        label: Style
+        message: Please select a style
+        placeholder: Select a style
