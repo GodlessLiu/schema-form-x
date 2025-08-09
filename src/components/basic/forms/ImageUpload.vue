@@ -6,7 +6,7 @@ const emits = defineEmits<{
   (e: 'update:modelValue', value: string): void
   (e: 'change', value: string): void
 }>()
-
+const { t } = useI18n()
 const isUploading = ref(false)
 
 const imageUrl = ref('')
@@ -39,7 +39,7 @@ function handleFileChange(e: Event) {
       </label>
       <input id="image-upload" type="file" class="hidden" accept="image/*" @change="handleFileChange">
       <br>
-      <small v-show="isUploading" class="text-[var(--primary)]">uploading...</small>
+      <small v-show="isUploading" class="text-[var(--primary)]">{{ t('app.form.uploading') }}</small>
     </div>
   </div>
 </template>

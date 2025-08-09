@@ -32,6 +32,7 @@ app:
       empty: 空
   form:
     send: 发送
+    uploading: 上传中...
     imageTransformer:
       title: 图像风格迁移
       description: 根据用户提供原始图片，再选择自己想要的风格，就可以生成其他不同类型的图像
