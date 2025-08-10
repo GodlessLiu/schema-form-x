@@ -8,16 +8,18 @@ interface ImageTransformerResult {
   url: string
 }
 
+export type TaskStatus = 'RUNNING' | 'FAILED' | 'SUCCEEDED' | undefined
+
 interface ImageTransformerOutput {
   task_id: string
-  task_status: 'RUNNING' | 'FAILED' | 'SUCCEEDED'
+  task_status: TaskStatus
   submit_time: string
   scheduled_time: string
   end_time: string
-  error_message: string
+  message: string
   start_time: string
   style_index: number
-  error_code: number
+  code: string
   results: ImageTransformerResult[]
 }
 
@@ -69,12 +71,14 @@ export interface TaskMetrics {
 
 export interface Text2ImageOutput {
   task_id: string
-  task_status: string // 可改为联合类型：'PENDING' | 'RUNNING' | 'SUCCEEDED' | 'FAILED'
+  task_status: TaskStatus
   submit_time: string
   scheduled_time: string
   end_time: string
   results: Text2ImageItemResult[]
   task_metrics: TaskMetrics
+  message: string
+  code: string
 }
 
 export interface Text2ImageUsage {

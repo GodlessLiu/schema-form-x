@@ -1,20 +1,18 @@
-import type { CreateTaskResponse } from '~/api/types'
-import { toast } from 'vue-sonner'
+import type { CreateTaskResponse, TaskStatus } from '~/api/types'
 import { getResultByTaskId } from '~/api'
 
 interface TaskResult<T> {
   response: T
-  success: boolean
+  status: TaskStatus
 }
 
 export function useAliyunGeneration<T>() {
-  const { t } = useI18n()
   // 任务ID
   const task_id = ref<string>('')
   // 任务结果内容
   const task_result = reactive<TaskResult<T>>({
     response: {} as T,
-    success: false,
+    status: undefined,
   })
   // 任务状态
   const isLoading = ref<boolean>(false)
@@ -23,18 +21,16 @@ export function useAliyunGeneration<T>() {
   const { resume, pause } = useIntervalFn(async () => {
     if (task_id.value) {
       const data = await getResultByTaskId(task_id.value)
-      if (data.output.task_status === 'SUCCEEDED') {
+      const status = data.output.task_status!
+      if (['FAILED', 'SUCCEEDED'].includes(status)) {
         // @ts-expect-error Let me do it!!
         task_result.response = data as T
-        task_result.success = true
+        task_result.status = status
         isLoading.value = false
         pause()
       }
-      else if (data.output.task_status === 'FAILED') {
-        task_result.success = false
-        toast.error(t('app.global.excuteError'))
-        isLoading.value = false
-        pause()
+      else if (status === 'RUNNING') {
+        task_result.status = status
       }
     }
   }, 1000, {
@@ -47,6 +43,7 @@ export function useAliyunGeneration<T>() {
     const { output } = await task(data)
     const id = output.task_id
     if (id) {
+      task_result.status = 'RUNNING'
       task_id.value = id
       resume()
       return true

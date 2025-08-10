@@ -74,3 +74,5 @@ app:
         label: 智能改写
       watermark:
         label: 水印
+    imageEdit:
+      title: 通用图像编辑

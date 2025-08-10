@@ -22,6 +22,7 @@
     "@vueuse/core": "^13.6.0",
     "@vueuse/router": "^13.6.0",
     "axios": "^1.11.0",
+    "lightgallery": "^2.8.3",
     "lodash": "^4.17.21",
     "lucide-vue-next": "^0.526.0",
     "nprogress": "^0.2.0",

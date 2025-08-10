@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import ImageEdit from './imageEdit/ImageEdit.vue'
 import ImageTransformer from './imageTransformer/ImageTransformer.vue'
 import Text2Image from './text2Image/Text2Image.vue'
 
@@ -16,6 +17,11 @@ const tabList = [
     label: 'app.form.text2Image.title',
     tabName: 'text2Image',
     value: toRaw(Text2Image),
+  },
+  {
+    label: 'app.form.imageEdit.title',
+    tabName: 'imageEdit',
+    value: toRaw(ImageEdit),
   },
 ] as const
 const tab = useRouteQuery('tab') as Ref<typeof tabList[number]['tabName']>

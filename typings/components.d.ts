@@ -8,6 +8,7 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    Badge: typeof import('./../src/components/ui/badge/Badge.vue')['default']
     Button: typeof import('./../src/components/ui/button/Button.vue')['default']
     Card: typeof import('./../src/components/ui/card/Card.vue')['default']
     CardAction: typeof import('./../src/components/ui/card/CardAction.vue')['default']
@@ -42,7 +43,6 @@ declare module 'vue' {
     FormLabel: typeof import('./../src/components/ui/form/FormLabel.vue')['default']
     FormMessage: typeof import('./../src/components/ui/form/FormMessage.vue')['default']
     GlobalLoading: typeof import('./../src/components/ui/loading/GlobalLoading.vue')['default']
-    ImageTransformer: typeof import('./../src/components/apps/imageTransformer/ImageTransformer.vue')['default']
     ImageUpload: typeof import('./../src/components/basic/forms/ImageUpload.vue')['default']
     Input: typeof import('./../src/components/ui/input/Input.vue')['default']
     Label: typeof import('./../src/components/ui/label/Label.vue')['default']
@@ -80,11 +80,11 @@ declare module 'vue' {
     TabsContent: typeof import('./../src/components/ui/tabs/TabsContent.vue')['default']
     TabsList: typeof import('./../src/components/ui/tabs/TabsList.vue')['default']
     TabsTrigger: typeof import('./../src/components/ui/tabs/TabsTrigger.vue')['default']
-    Text2Image: typeof import('./../src/components/apps/text2Image/Text2Image.vue')['default']
     Textarea: typeof import('./../src/components/ui/textarea/Textarea.vue')['default']
     XCommand: typeof import('./../src/components/XCommand.vue')['default']
     XFooter: typeof import('./../src/components/XFooter.vue')['default']
     XHeader: typeof import('./../src/components/header/XHeader.vue')['default']
+    XLightgallery: typeof import('./../src/components/XLightgallery.vue')['default']
     XPerformance: typeof import('./../src/components/header/XPerformance.vue')['default']
     XSettings: typeof import('./../src/components/header/XSettings.vue')['default']
   }

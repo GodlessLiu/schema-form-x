@@ -59,7 +59,14 @@ async function handleSubmit(data: any) {
     </CardHeader>
     <CardContent>
       <form-config :form-schema="formSchema" :loading="isLoading" @submit="handleSubmit" />
-      <img v-if="task_result.success" :src="task_result.response.output.results[0].url" alt="transformed image" class="mt-4 rounded-sm">
+      <x-lightgallery v-if="task_result.status === 'SUCCEEDED'">
+        <img :src="task_result.response.output.results[0].url" alt="transformed image" class="mt-4 rounded-sm cursor-pointer">
+      </x-lightgallery>
+      <p v-else-if="task_result.status === 'FAILED'" class="text-red-500 mt-4">
+        <Badge variant="destructive" class="mr-2">
+          {{ task_result.response.output.code }}
+        </Badge>{{ task_result.response.output.message }}
+      </p>
     </CardContent>
   </Card>
 </template>

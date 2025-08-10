@@ -90,12 +90,17 @@ function handleSubmit(data: any) {
     </CardHeader>
     <CardContent>
       <form-config :form-schema="formSchema" :loading="isLoading" @submit="handleSubmit" />
-      <div v-if="task_result.success" class="grid grid-cols-2 gap-4 mt-10">
+      <x-lightgallery v-if="task_result.status === 'SUCCEEDED'" class-name="grid grid-cols-2 gap-4 mt-10">
         <img
           v-for="item in task_result.response.output.results" :key="item.url" :src="item.url" alt="image"
-          class="rounded-md"
+          class="rounded-md cursor-pointer"
         >
-      </div>
+      </x-lightgallery>
+      <p v-else-if="task_result.status === 'FAILED'" class="text-red-500 mt-4">
+        <Badge variant="destructive" class="mr-2">
+          {{ task_result.response.output.code }}
+        </Badge>{{ task_result.response.output.message }}
+      </p>
     </CardContent>
   </Card>
 </template>

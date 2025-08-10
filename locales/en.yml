@@ -76,4 +76,5 @@ app:
       watermark:
         label: Watermark
         placeholder: Select
-
+    imgageEdit:
+      title: General Image Editing
